@@ -7,4 +7,9 @@
         <RootNamespace>Phanes.Common</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\libs\Mapper\Mapper.csproj" />
+      <ProjectReference Include="..\libs\Planner\Planner.csproj" />
+    </ItemGroup>
+
 </Project>
