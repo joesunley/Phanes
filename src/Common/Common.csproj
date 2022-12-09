@@ -4,11 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Phanes.Mapper</RootNamespace>
+        <RootNamespace>Phanes.Common</RootNamespace>
     </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Sunley.Mathematics-net6" Version="1.2.0" />
-    </ItemGroup>
 
 </Project>
