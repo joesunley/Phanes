@@ -3,6 +3,8 @@
 [DebuggerDisplay("{Name}, {Number}")]
 public abstract class Symbol : IStorable
 {
+	protected readonly Map _parent;
+	
 	public Guid Id { get; init; }
 	
 	public string Name { get; set; }
@@ -15,8 +17,10 @@ public abstract class Symbol : IStorable
 	
 	public bool IsHelperSymbol { get; set; }
 
-	protected Symbol(string name, string description, SymbolNumber number, bool isUncrossable, bool isHelperSymbol)
+	protected Symbol(Map parent, string name, string description, SymbolNumber number, bool isUncrossable, bool isHelperSymbol)
 	{
+		_parent = parent;
+		
 		Id = Guid.NewGuid();
 		
 		Name = name;
@@ -27,8 +31,10 @@ public abstract class Symbol : IStorable
 		IsHelperSymbol = isHelperSymbol;
 	}
 
-	protected Symbol(Guid id, string name, string description, SymbolNumber number, bool isUncrossable, bool isHelperSymbol)
+	protected Symbol(Map parent, Guid id, string name, string description, SymbolNumber number, bool isUncrossable, bool isHelperSymbol)
 	{
+		_parent = parent;
+		
 		Id = id;
 		
 		Name = name;
@@ -80,6 +86,8 @@ public interface IPathSymbol
 	MidStyle MidStyle { get; set; }
 	
 	float Width { get; set; }
+
+	int ZIndex(int index);
 }
 
 [DebuggerDisplay("Dash Style {HasDash} - {DashLength}, {GapLength}")]

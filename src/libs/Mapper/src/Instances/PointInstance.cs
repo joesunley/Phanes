@@ -3,17 +3,22 @@ namespace Phanes.Mapper;
 public sealed class PointInstance : Instance<PointSymbol>
 {
 	public vec2 Centre { get; set; }
+	
+	/// <warning>Measured in Degrees</warning>
+	public float Rotation { get; set; }
 
-	public PointInstance(int layer, PointSymbol symbol, vec2 centre)
+	public PointInstance(int layer, PointSymbol symbol, vec2 centre, float rotation)
 		: base(layer, symbol)
 	{
 		Centre = centre;
+		Rotation = rotation;
 	}
 
-	public PointInstance(Guid id, int layer, PointSymbol symbol, vec2 centre)
+	public PointInstance(Guid id, int layer, PointSymbol symbol, vec2 centre, float rotation)
 		: base(id, layer, symbol)
 	{
 		Centre = centre;
+		Rotation = rotation;
 	}
 
 	public override vec4 GetBoundingBox()

@@ -73,6 +73,24 @@ public abstract class PathInstance<T> : Instance<T>, PathInstance where T : Symb
 	}
 }
 
+public sealed class LineInstance : PathInstance<LineSymbol>
+{
+	public LineInstance(int layer, LineSymbol symbol, PathCollection segments)
+		: base(layer, symbol, segments) { }
+
+	public LineInstance(Guid id, int layer, LineSymbol symbol, PathCollection segments)
+		: base(id, layer, symbol, segments) { }
+}
+
+public sealed class AreaInstance : PathInstance<AreaSymbol>
+{
+	public AreaInstance(int layer, AreaSymbol symbol, PathCollection segments)
+		: base(layer, symbol, segments) { }
+
+	public AreaInstance(Guid id, int layer, AreaSymbol symbol, PathCollection segments)
+		: base(id, layer, symbol, segments) { }
+}
+
 public interface PathInstance : Instance
 {
 	PathCollection Segments { get; }
@@ -118,8 +136,6 @@ public sealed class PathCollection : List<IPathSegment>
 		return points;
 	}
 }
-
-
 
 public interface IPathSegment
 {

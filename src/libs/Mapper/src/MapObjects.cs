@@ -2,16 +2,22 @@ namespace Phanes.Mapper;
 
 public abstract class MapObject
 {
+	protected readonly Map _parent;
+	
 	public Guid Id { get; set; }
 
-	protected MapObject()
+	protected MapObject(Map parent)
 	{
 		Id = Guid.NewGuid();
+		
+		_parent = parent;
 	}
 
-	protected MapObject(Guid id)
+	protected MapObject(Map parent, Guid id)
 	{
 		Id = id;
+		
+		_parent = parent;
 	}
 
 	public virtual int ZIndex(int index) => -1;
@@ -27,7 +33,7 @@ public sealed class PointObject : MapObject
 	public float InnerRadius { get; set; }
 	public float OuterRadius { get; set; }
 
-	public PointObject(Colour innerColour, Colour outerColour, float innerRadius, float outerRadius)
+	public PointObject(Map parent, Colour innerColour, Colour outerColour, float innerRadius, float outerRadius) : base(parent)
 	{
 		InnerColour = innerColour;
 		OuterColour = outerColour;
@@ -35,12 +41,22 @@ public sealed class PointObject : MapObject
 		OuterRadius = outerRadius;
 	}
 	
-	public PointObject(Guid id, Colour innerColour, Colour outerColour, float innerRadius, float outerRadius) : base(id)
+	public PointObject(Map parent, Guid id, Colour innerColour, Colour outerColour, float innerRadius, float outerRadius) : base(parent, id)
 	{
 		InnerColour = innerColour;
 		OuterColour = outerColour;
 		InnerRadius = innerRadius;
 		OuterRadius = outerRadius;
+	}
+
+	public override int ZIndex(int index)
+	{
+		return index switch
+		{
+			0 => _parent.Colours.GetZIndex(InnerColour),
+			1 => _parent.Colours.GetZIndex(OuterColour),
+			_ => -1,
+		};
 	}
 
 	public override vec4 GetBoundingBox()
@@ -62,19 +78,22 @@ public sealed class LineObject : MapObject
 	
 	public Colour Colour { get; set; }
 	
-	public LineObject(IEnumerable<vec2> points, float width, Colour colour)
+	public LineObject(Map parent, IEnumerable<vec2> points, float width, Colour colour) : base(parent)
 	{
 		Points = new(points);
 		Width = width;
 		Colour = colour;
 	}
 	
-	public LineObject(Guid id, IEnumerable<vec2> points, float width, Colour colour) : base(id)
+	public LineObject(Map parent, Guid id, IEnumerable<vec2> points, float width, Colour colour) : base(parent, id)
 	{
 		Points = new(points);
 		Width = width;
 		Colour = colour;
 	}
+
+	public override int ZIndex(int index)
+		=> _parent.Colours.GetZIndex(Colour);
 
 	public override vec4 GetBoundingBox()
 	{
@@ -97,26 +116,36 @@ public sealed class AreaObject : MapObject
 	
 	public float Width { get; set; }
 	
-	public Colour Colour { get; set; }
+	public Colour BorderColour { get; set; }
 	
 	public IFill Fill { get; set; }
 
-	public AreaObject(IEnumerable<vec2> points, float width, Colour colour, IFill fill)
+	public AreaObject(Map parent, IEnumerable<vec2> points, float width, Colour borderColour, IFill fill) : base(parent)
 	{
 		Points = new(points);
 		Width = width;
-		Colour = colour;
+		BorderColour = borderColour;
 		Fill = fill;
 	}
 	
-	public AreaObject(Guid id, IEnumerable<vec2> points, float width, Colour colour, IFill fill) : base(id)
+	public AreaObject(Map parent, Guid id, IEnumerable<vec2> points, float width, Colour borderColour, IFill fill) : base(parent, id)
 	{
 		Points = new(points);
 		Width = width;
-		Colour = colour;
+		BorderColour = borderColour;
 		Fill = fill;
 	}
-	
+
+	public override int ZIndex(int index)
+	{
+		return index switch
+		{
+			0 => _parent.Colours.GetZIndex(BorderColour),
+			1 => _parent.Colours.GetZIndex((SolidFill)Fill),
+			_ => -1,
+		};
+	}
+
 	public override vec4 GetBoundingBox()
 	{
 		vec2 topLeft = vec2.MaxValue,
@@ -134,5 +163,13 @@ public sealed class AreaObject : MapObject
 
 public sealed class TextObject : MapObject
 {
-	
+	public TextObject(Map parent) : base(parent)
+	{
+		throw new NotImplementedException();
+	}
+
+	public TextObject(Map parent, Guid id) : base(parent, id)
+	{
+		throw new NotImplementedException();
+	}
 }

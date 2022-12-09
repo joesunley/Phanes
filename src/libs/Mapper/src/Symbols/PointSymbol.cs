@@ -6,15 +6,15 @@ public sealed class PointSymbol : Symbol
 	
 	public bool IsLockedToNorth { get; set; }
 
-	public PointSymbol(string name, string description, SymbolNumber number, bool isUncrossable, bool isHelperSymbol, List<MapObject> mapObjects, bool isLockedToNorth) 
-		: base(name, description, number, isUncrossable, isHelperSymbol)
+	public PointSymbol(Map parent, string name, string description, SymbolNumber number, bool isUncrossable, bool isHelperSymbol, List<MapObject> mapObjects, bool isLockedToNorth) 
+		: base(parent, name, description, number, isUncrossable, isHelperSymbol)
 	{
 		MapObjects = mapObjects;
 		IsLockedToNorth = isLockedToNorth;
 	}
 	
-	public PointSymbol(Guid id, string name, string description, SymbolNumber number, bool isUncrossable, bool isHelperSymbol, List<MapObject> mapObjects, bool isLockedToNorth) 
-		: base(id, name, description, number, isUncrossable, isHelperSymbol)
+	public PointSymbol(Map parent, Guid id, string name, string description, SymbolNumber number, bool isUncrossable, bool isHelperSymbol, List<MapObject> mapObjects, bool isLockedToNorth) 
+		: base(parent, id, name, description, number, isUncrossable, isHelperSymbol)
 	{
 		MapObjects = mapObjects;
 		IsLockedToNorth = isLockedToNorth;
