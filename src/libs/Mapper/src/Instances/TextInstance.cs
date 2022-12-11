@@ -2,13 +2,27 @@ namespace Phanes.Mapper;
 
 public sealed class TextInstance : Instance<TextSymbol>
 {
-	public TextInstance(int layer, TextSymbol symbol) : base(layer, symbol)
-	{
-		throw new NotImplementedException();
-	}
+	public string Text { get; set; }
+	
+	public HorizontalAlignment HorizontalAlignment { get; set; }
+	public VerticalAlignment VerticalAlignment { get; set; }
 
-	public TextInstance(Guid id, int layer, TextSymbol symbol) : base(id, layer, symbol)
+	public TextInstance(int layer, TextSymbol symbol, string text, HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment) 
+		: base(layer, symbol)
 	{
-		throw new NotImplementedException();
+		Text = text;
+		HorizontalAlignment = horizontalAlignment;
+		VerticalAlignment = verticalAlignment;
+	}
+	
+	public TextInstance(Guid id, int layer, TextSymbol symbol, string text, HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment)
+		: base(id, layer, symbol)
+	{
+		Text = text;
+		HorizontalAlignment = horizontalAlignment;
+		VerticalAlignment = verticalAlignment;
 	}
 }
+
+public enum HorizontalAlignment { Left, Center, Right }
+public enum VerticalAlignment { Top, Center, Bottom }
