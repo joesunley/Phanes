@@ -15,9 +15,9 @@ public abstract class BaseStore<T> : IList<T> where T : IStorable
 		_items.ListChanged += (_, e) => Changed?.Invoke(e);
 	}
 
-	protected BaseStore(IList<T> items)
+	protected BaseStore(IEnumerable<T> items)
 	{
-		_items = new(items);
+		_items = new(items.ToList());
 		_items.ListChanged += (_, e) => Changed?.Invoke(e);
 	}
 	
@@ -58,7 +58,7 @@ public interface IStorable
 public sealed class ColourStore : BaseStore<Colour>
 {
 	public ColourStore() { }
-	public ColourStore(IList<Colour> items) : base(items) { }
+	public ColourStore(IEnumerable<Colour> items) : base(items) { }
 
 	public Colour this[string name]
 	{
@@ -80,7 +80,7 @@ public sealed class ColourStore : BaseStore<Colour>
 public sealed class SymbolStore : BaseStore<Symbol>
 {
 	public SymbolStore() {}
-	public SymbolStore(IList<Symbol> items) : base(items) { }
+	public SymbolStore(IEnumerable<Symbol> items) : base(items) { }
 	
 	public Symbol this[string name]
 	{
@@ -98,7 +98,7 @@ public sealed class InstanceStore : BaseStore<Instance>
 		Layers = new() { { "Main Layer", 0 } };
 	}
 
-	public InstanceStore(IList<Instance> items) : base(items)
+	public InstanceStore(IEnumerable<Instance> items) : base(items)
 	{
 		Layers = new() { { "Main Layer", 0 } };	
 	}
