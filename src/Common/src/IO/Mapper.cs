@@ -123,9 +123,9 @@ file static class _Load_1
 		var bas = SymbolBase(node);
 		
 		IEnumerable<MapObject> mapObjects = MapObjects(node.Children["MapObjects"]);
-		bool isLocked = bool.Parse(node.Attributes["isLocked"]);	
+		bool isRotatable = bool.Parse(node.Attributes["isRotatable"]);	
 
-		return new(s_map, bas.id, bas.name, bas.desc, bas.num, bas.uncr, bas.help, mapObjects, isLocked);
+		return new(s_map, bas.id, bas.name, bas.desc, bas.num, bas.uncr, bas.help, mapObjects, isRotatable);
 	}
 
 	public static LineSymbol LineSymbol(XMLNode node)
@@ -528,7 +528,7 @@ file static class _Save_1
 		XMLNode objs = MapObjects(sym.MapObjects);
 		node.AddChild(objs);
 
-		node.AddAttribute("isLocked", sym.IsLockedToNorth.ToString());
+		node.AddAttribute("isRotatable", sym.IsRotatable.ToString());
 		
 		return node;
 	}
