@@ -7,25 +7,25 @@ using Sys = System.Xml;
 public sealed class XMLDocument
 {
 	public XMLNode Root { get; set; }
-	public XMLAttributeCollection Metadata { get; set; }
+	// public XMLAttributeCollection Metadata { get; set; }
 
 	public XMLDocument()
 	{
 		Root = new();
-		Metadata = new();
+		// Metadata = new();
 	}
 
 	public XMLDocument(XMLNode root)
 	{
 		Root = root;
-		Metadata = new();
+		// Metadata = new();
 	}
 
-	public XMLDocument(XMLNode root, XMLAttributeCollection metadata)
-	{
-		Root = root;
-		Metadata = metadata;
-	}
+	// public XMLDocument(XMLNode root, XMLAttributeCollection metadata)
+	// {
+	// 	Root = root;
+	// 	Metadata = metadata;
+	// }
 
 	public static XMLDocument Deserialize(string xml)
 	{
@@ -167,10 +167,7 @@ internal static class Marshall
 	{
 		Sys.XmlNode root = doc.LastChild!;
 		
-		
-		// XMLNode metaNode = DeserNode(doc.ChildNodes.OfType<x.XmlNode>().First(x => x.Name == "m"));
 		XMLNode rootNode = DeserNode(root);
-
 
 		return new(rootNode);
 	}
@@ -206,7 +203,7 @@ internal static class Marshall
 	{
 		XDocument xDoc = new();
 
-		xDoc.Add(SerMeta(doc.Metadata));
+		// xDoc.Add(SerMeta(doc.Metadata));
 		xDoc.Add(SerNode(doc.Root));
 		
 		return xDoc;

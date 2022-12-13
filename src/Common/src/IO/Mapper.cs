@@ -11,10 +11,10 @@ public static class Mapper
 	{
 		XMLDocument doc = XMLDocument.Deserialize(text);
 		
-		if (!doc.Metadata.Exists("version"))
+		if (!doc.Root.Attributes.Exists("version"))
 			throw new IOException("Did not find Map Version");
 
-		return doc.Metadata["version"] switch
+		return doc.Root.Attributes["version"] switch
 		{
 			"1" => Load_1(doc.Root),
 			_ => throw new IOException("Version not supported"),
@@ -38,10 +38,11 @@ public static class Mapper
 	public static XMLDocument Save_1(Map map)
 	{
 		XMLNode node = _Save_1.Map(map);
+		node.AddAttribute("version", "1");
 
 		XMLDocument doc = new(node);
 		
-		doc.Metadata.Add("version", "1");
+		// doc.Metadata.Add("version", "1");
 
 		return doc;
 	}
