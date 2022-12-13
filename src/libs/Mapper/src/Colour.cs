@@ -1,5 +1,6 @@
 namespace Phanes.Mapper;
 
+[DebuggerDisplay("{Name}, {HexValue}")]
 public sealed class Colour : IStorable
 {
 	public Guid Id { get; init; }

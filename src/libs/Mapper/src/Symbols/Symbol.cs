@@ -16,6 +16,8 @@ public abstract class Symbol : IStorable
 	public bool IsUncrossable { get; set; }
 	
 	public bool IsHelperSymbol { get; set; }
+	
+	// Icon
 
 	protected Symbol(Map parent, string name, string description, SymbolNumber number, bool isUncrossable, bool isHelperSymbol)
 	{
@@ -140,7 +142,7 @@ public struct MidStyle
 	public float InitialOffset { get; set; }
 	
 	public float EndOffset { get; set; }
-	
+
 	public MidStyle()
 	{
 		HasMid = false;
