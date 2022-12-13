@@ -208,3 +208,24 @@ public struct PolyLineSegment : IPathSegment
 
     public List<vec2> Points { get; set; }
 }
+
+public struct Text : IShape
+{
+    public vec2 TopLeft { get; set; }
+    
+    public string Content { get; set; }
+    
+    public Font Font { get; set; }
+    
+    public (HorizontalAlignment h, VerticalAlignment v) Alignment { get; set; }
+    
+    public (Colour colour, float width) Border { get; set; }
+    
+    public (Colour colour, float width) Framing { get; set; }
+    
+    public Colour Fill { get; set; }
+    
+    public float Opacity { get; set; }
+    
+    public int ZIndex { get; set; }
+}
